@@ -90,3 +90,18 @@ services:
     entrypoint: ["php", "/var/www/html/artisan"]
     networks:
       - laravel
+
+  connector:
+    image: abobija/ssh
+    container_name: connector
+    depends_on:
+      - php
+    ports:
+      - "2222:22"
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    tty: true
+    networks:
+      - laravel
